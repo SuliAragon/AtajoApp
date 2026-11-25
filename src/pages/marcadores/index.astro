@@ -1,0 +1,99 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import Thumbnail from '../../components/Thumbnail.astro';
+---
+<Layout title="Mis marcadores · Atajo" description="Organiza y abre tus webs favoritas desde Atajo." page="manager">
+  <main id="main" class="workspace shell">
+    <div class="workspace-header">
+      <div>
+        <h1>Mis marcadores</h1>
+        <p>Guarda tus webs favoritas y agrúpalas por sección.</p>
+      </div>
+      <div class="csv-actions" data-ready hidden aria-label="Copia de marcadores">
+        <button class="button" type="button" data-action="upload"><Icon name="upload" size={18} /> Importar CSV o HTML</button>
+        <button class="button" type="button" data-action="download"><Icon name="download" size={18} /> Descargar CSV</button>
+        <input id="import-file" type="file" accept=".csv,.html,.htm,text/csv,text/html" hidden />
+      </div>
+    </div>
+    <p id="storage-notice" class="storage-notice" role="alert" hidden>El navegador no ha podido guardar los cambios. Descarga un CSV para conservarlos antes de salir.</p>
+    <div class="board" data-ready hidden>
+      <aside class="sidebar">
+        <h2 id="sections-title">Secciones</h2>
+        <div id="section-nav" class="section-nav" role="group" aria-labelledby="sections-title"></div>
+        <button class="button add-section" type="button" data-action="add-section"><Icon name="plus" size={18} /> Nueva sección</button>
+      </aside>
+      <div class="bookmarks">
+        <div class="bookmarks-toolbar">
+          <label class="search-box" for="bookmark-search">
+            <Icon name="search" size={19} />
+            <input id="bookmark-search" type="search" placeholder="Buscar marcadores" aria-label="Buscar marcadores" />
+          </label>
+          <button id="new-link" class="button primary" type="button" data-action="add-link"><Icon name="plus" size={18} /> Nuevo marcador</button>
+        </div>
+        <label class="thumbnail-option">
+          <input id="thumbnail-setting" type="checkbox" checked />
+          Miniaturas automáticas
+        </label>
+        <div id="sections"></div>
+      </div>
+    </div>
+    <noscript><p class="noscript">Activa JavaScript en tu navegador para gestionar tus marcadores.</p></noscript>
+    <div role="status" aria-live="polite"><div id="toast" class="toast" hidden></div></div>
+
+    <dialog id="editor" class="dialog" aria-labelledby="editor-title">
+      <form id="editor-form">
+        <h2 id="editor-title"></h2>
+        <p id="editor-intro" class="dialog-intro" hidden></p>
+        <div id="form-fields" class="form-fields"></div>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button" type="button" data-action="cancel">Cancelar</button>
+          <button id="editor-submit" class="button primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </dialog>
+
+    <template id="section-choice-template">
+      <button class="section-choice" type="button" data-action="filter" aria-pressed="false">
+        <span data-icon></span><span class="section-label"></span><span class="count"></span>
+      </button>
+    </template>
+    <template id="section-template">
+      <section class="bookmark-section">
+        <div class="section-heading">
+          <div class="section-heading-copy"><Icon name="folder" size={24} /><h2></h2></div>
+          <div class="section-actions">
+            <button class="icon-button" type="button" data-action="add-link" aria-label="Añadir marcador" title="Añadir marcador"><Icon name="plus" size={20} /></button>
+            <button class="icon-button" type="button" data-action="reorder-section" title="Cambiar posición de la sección" hidden><Icon name="reorder" size={19} /></button>
+            <button class="icon-button" type="button" data-action="edit-section" aria-label="Renombrar sección" title="Renombrar sección"><Icon name="edit" size={18} /></button>
+            <button class="icon-button" type="button" data-action="delete-section" aria-label="Eliminar sección" title="Eliminar sección"><Icon name="trash" size={18} /></button>
+          </div>
+        </div>
+        <div class="card-grid"></div>
+      </section>
+    </template>
+    <template id="card-template">
+      <article class="bookmark-card">
+        <a class="card-link" target="_blank" rel="noopener noreferrer">
+          <Thumbnail />
+          <span class="card-caption">
+            <span class="card-copy"><strong></strong><span class="card-domain"></span><span class="card-note" hidden></span></span>
+            <Icon name="external" size={20} class="outbound" />
+          </span>
+        </a>
+        <div class="card-actions">
+          <button class="icon-button" type="button" data-action="reorder-link" title="Cambiar posición del marcador" hidden><Icon name="reorder" size={18} /></button>
+          <button class="icon-button" type="button" data-action="edit-link" aria-label="Editar marcador" title="Editar marcador"><Icon name="edit" size={17} /></button>
+          <button class="icon-button" type="button" data-action="delete-link" aria-label="Eliminar marcador" title="Eliminar marcador"><Icon name="trash" size={17} /></button>
+        </div>
+      </article>
+    </template>
+    <template id="grid-icon"><Icon name="grid" size={18} /></template>
+    <template id="folder-icon"><Icon name="folder" size={18} /></template>
+  </main>
+</Layout>
+
+<script>
+  import '../../lib/manager';
+</script>

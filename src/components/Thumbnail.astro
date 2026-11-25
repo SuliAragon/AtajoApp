@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  name?: string;
+  url?: string;
+}
+const { name, url } = Astro.props;
+const hostname = url ? new URL(url).hostname : undefined;
+---
+<span class="thumbnail" data-thumbnail data-address={url}>
+  <span class="thumbnail-fallback" aria-hidden="true">
+    <Icon name="globe" size={20} />
+    <strong data-preview-name>{name}</strong>
+    <span data-preview-host>{hostname}</span>
+  </span>
+  <img alt="" width="640" height="360" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+</span>

@@ -1,0 +1,5 @@
+node_modules/
+.astro/
+dist/
+generated_images/
+.DS_Store
