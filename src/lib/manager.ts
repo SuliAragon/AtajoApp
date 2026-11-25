@@ -279,7 +279,7 @@ function openLink(opener: HTMLButtonElement, sectionId?: string, current?: Bookm
     title: current ? 'Editar marcador' : 'Nuevo marcador',
     submitLabel: current ? 'Guardar cambios' : 'Añadir marcador',
     children: [
-      textField('Nombre', 'name', current?.name, 'Ej. Wikipedia'),
+      textField('Nombre', 'name', current?.name, 'Ej. Mi blog favorito'),
       textField('Dirección web', 'url', current?.url, 'https://ejemplo.com'),
       selectField('Sección', 'section', sections.map(({ id, name }) => [id, name]), sectionId || selectedSection || sections[0].id),
       field('Nota (opcional)', notes),

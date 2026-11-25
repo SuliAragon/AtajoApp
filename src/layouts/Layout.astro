@@ -15,6 +15,7 @@ const manager = `${base}/marcadores/`;
     <meta name="theme-color" content="#0d0d0e" />
     <link rel="icon" type="image/svg+xml" href={`${base}/atajo.svg`} />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#main">Saltar al contenido</a>

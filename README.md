@@ -1,6 +1,6 @@
 # Atajo
 
-Gestor personal de marcadores. La portada muestra ejemplos de Wikipedia, OpenStreetMap y MDN Web Docs. En **Mis marcadores**, cada persona empieza con una colección vacía y puede crear sus propias secciones o importar sus enlaces.
+Gestor personal de marcadores. La portada muestra ejemplos de Wikipedia, OpenStreetMap y MDN Web Docs. Usa **Ocultar ejemplos** para dejar de verlos en ese navegador. En **Mis marcadores**, cada persona empieza con una colección vacía y puede crear sus propias secciones o importar sus enlaces.
 
 Atajo está hecho con Astro y genera dos páginas estáticas. Los datos se guardan en el navegador. Usa el CSV para mover tu colección a otro dispositivo o navegador.
 

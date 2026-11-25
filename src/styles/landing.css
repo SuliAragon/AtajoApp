@@ -23,6 +23,12 @@
 .gallery-meta svg { color: var(--accent); }
 .gallery-entry h3 { font-size: clamp(1.45rem, 3vw, 2.1rem); letter-spacing: -.055em; line-height: 1.15; font-weight: 800; }
 .gallery-entry p { margin-top: .32rem; }
+.examples-toggle { min-height: 44px; padding: 0; margin-top: .8rem; border: 0; background: none; color: var(--muted); font-size: var(--label); text-decoration: underline; text-underline-offset: .18em; }
+.examples-toggle:hover { color: var(--ink); }
+[data-examples-hidden] [data-example-content] { display: none; }
+[data-examples-hidden] .gallery { padding-block: .65rem; }
+[data-examples-hidden] .examples-toggle { margin-top: 0; }
+[data-examples-hidden] :is(.guide-grid, .portability-grid) { grid-template-columns: minmax(0, 46rem); justify-content: center; }
 
 .guide { background: #171719; }
 .guide-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); column-gap: clamp(1.5rem, 5.3vw, 6.5rem); align-items: start; }

@@ -1,15 +1,37 @@
 import { showThumbnail, THUMBNAIL_SETTING, thumbnailsEnabled } from './thumbnails';
 
+const root = document.documentElement;
+const examplesToggle = document.querySelector<HTMLButtonElement>('[data-examples-toggle]')!;
+const examplesPreference = examplesToggle.dataset.examplesToggle!;
+
 function loadGalleryThumbnails() {
-  const enabled = thumbnailsEnabled();
+  const enabled = !root.hasAttribute('data-examples-hidden') && thumbnailsEnabled();
   for (const preview of document.querySelectorAll<HTMLElement>('[data-thumbnail][data-address]')) {
     showThumbnail(preview, preview.dataset.address!, enabled);
   }
 }
 
-loadGalleryThumbnails();
-window.addEventListener('storage', ({ key }) => {
-  if (key === THUMBNAIL_SETTING || key === null) loadGalleryThumbnails();
+function renderExamples(hidden: boolean) {
+  root.toggleAttribute('data-examples-hidden', hidden);
+  examplesToggle.textContent = hidden ? 'Mostrar ejemplos' : 'Ocultar ejemplos';
+  examplesToggle.setAttribute('aria-expanded', String(!hidden));
+  loadGalleryThumbnails();
+}
+
+renderExamples(root.hasAttribute('data-examples-hidden'));
+examplesToggle.hidden = false;
+examplesToggle.addEventListener('click', () => {
+  const hidden = !root.hasAttribute('data-examples-hidden');
+  renderExamples(hidden);
+  try {
+    if (hidden) localStorage.setItem(examplesPreference, 'hidden');
+    else localStorage.removeItem(examplesPreference);
+  } catch {}
+});
+
+window.addEventListener('storage', ({ key, newValue }) => {
+  if (key === examplesPreference || key === null) renderExamples(newValue === 'hidden');
+  else if (key === THUMBNAIL_SETTING) loadGalleryThumbnails();
 });
 
 const filters = document.querySelector<HTMLElement>('.gallery-filters')!;

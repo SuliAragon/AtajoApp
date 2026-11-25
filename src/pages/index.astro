@@ -6,6 +6,7 @@ import '../styles/landing.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const manager = `${base}/marcadores/`;
+const examplesPreference = 'atajo.ejemplos';
 const demoSections = [
   {
     id: 'aprendizaje',
@@ -32,6 +33,15 @@ const steps = [
 ];
 ---
 <Layout title="Atajo · Tu internet, a un clic" description="Guarda tus webs favoritas, reconócelas por sus miniaturas y llévalas contigo en un CSV." page="home">
+  <Fragment slot="head">
+    <script is:inline define:vars={{ examplesPreference }}>
+      try {
+        if (localStorage.getItem(examplesPreference) === 'hidden') {
+          document.documentElement.setAttribute('data-examples-hidden', '');
+        }
+      } catch {}
+    </script>
+  </Fragment>
   <main id="main" class="landing">
     <section class="hero" aria-labelledby="hero-title">
       <img class="hero-image" src={`${base}/atajo-portada.webp`} alt="" width="1600" height="901" fetchpriority="high" />
@@ -42,32 +52,35 @@ const steps = [
       </div>
     </section>
 
-    <section class="gallery shell landing-pad" id="explorar" aria-labelledby="gallery-title">
-      <div class="landing-lead">
-        <h2 id="gallery-title">Reconoce tus webs de un vistazo.</h2>
-        <p>Prueba con estas webs de ejemplo. Pulsa una miniatura para abrir la web.</p>
+    <section class="gallery shell landing-pad" id="explorar" aria-label="Ejemplos de marcadores">
+      <div id="gallery-examples" data-example-content>
+        <div class="landing-lead">
+          <h2>Reconoce tus webs de un vistazo.</h2>
+          <p>Prueba con estas webs de ejemplo. Pulsa una miniatura para abrir la web.</p>
+        </div>
+        <div class="gallery-filters" role="group" aria-label="Filtrar ejemplos por sección" hidden>
+          <button type="button" data-gallery-filter="" aria-pressed="true">Todas</button>
+          {demoSections.map((section) => (
+            <button type="button" data-gallery-filter={section.id} aria-pressed="false">{section.name}</button>
+          ))}
+        </div>
+        <div class="gallery-grid">
+          {demoSections.flatMap((section) => section.links.map((link) => (
+            <article class="gallery-entry" data-gallery-entry={section.id}>
+              <a class="gallery-link" href={link.url} target="_blank" rel="noopener noreferrer">
+                <Thumbnail name={link.name} url={link.url} />
+                <span class="gallery-meta">
+                  <span>{section.name}</span>
+                  <Icon name="external" size={23} />
+                </span>
+                <h3>{link.name}</h3>
+                <p>{link.note}</p>
+              </a>
+            </article>
+          )))}
+        </div>
       </div>
-      <div class="gallery-filters" role="group" aria-label="Filtrar ejemplos por sección" hidden>
-        <button type="button" data-gallery-filter="" aria-pressed="true">Todas</button>
-        {demoSections.map((section) => (
-          <button type="button" data-gallery-filter={section.id} aria-pressed="false">{section.name}</button>
-        ))}
-      </div>
-      <div class="gallery-grid">
-        {demoSections.flatMap((section) => section.links.map((link) => (
-          <article class="gallery-entry" data-gallery-entry={section.id}>
-            <a class="gallery-link" href={link.url} target="_blank" rel="noopener noreferrer">
-              <Thumbnail name={link.name} url={link.url} />
-              <span class="gallery-meta">
-                <span>{section.name}</span>
-                <Icon name="external" size={23} />
-              </span>
-              <h3>{link.name}</h3>
-              <p>{link.note}</p>
-            </a>
-          </article>
-        )))}
-      </div>
+      <button class="examples-toggle" type="button" data-examples-toggle={examplesPreference} aria-controls="gallery-examples guide-examples csv-examples" aria-expanded="true" hidden>Ocultar ejemplos</button>
     </section>
 
     <section class="guide landing-pad" id="como-funciona" aria-labelledby="guide-title">
@@ -86,7 +99,7 @@ const steps = [
             ))}
           </div>
         </div>
-        <div class="guide-example" aria-label="Demostración del panel de Atajo">
+        <div class="guide-example" id="guide-examples" data-example-content aria-label="Demostración del panel de Atajo">
           <div class="demo-top"><Icon name="bookmark" size={17} /> Atajo <span>Panel de ejemplo</span></div>
           <div class="demo-panel" data-guide-panel="guardar">
             <h3>Nuevo marcador</h3>
@@ -123,7 +136,7 @@ const steps = [
             <li><Icon name="upload" size={19} /> Importa el archivo y elige añadir o sustituir.</li>
           </ul>
         </div>
-        <div class="csv-illustration" aria-hidden="true">
+        <div class="csv-illustration" id="csv-examples" data-example-content aria-hidden="true">
           <span class="csv-type">.csv</span>
           <code>seccion,nombre,url{demoSections.flatMap((section) => section.links.map((link) => (
             <Fragment><br />{`${section.name},${link.name},${link.url}`}</Fragment>
