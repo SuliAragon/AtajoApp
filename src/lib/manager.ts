@@ -1,4 +1,3 @@
-import { initialSections } from './defaults';
 import { bookmarkUrl, keyFor, mergeSections, newId, type Bookmark, type Section } from './bookmarks';
 import { exportCsv, importCsv } from './csv';
 import { importBrowserBookmarks } from './browser-bookmarks';
@@ -37,7 +36,7 @@ let edit: ((data: FormData) => void) | undefined;
 let restoreFocus: (() => void) | undefined;
 
 function load(raw: string | null): Section[] {
-  if (raw === null) return structuredClone(initialSections);
+  if (raw === null) return [];
   const value = JSON.parse(raw) as { version?: number; sections?: Section[] };
   if (value?.version !== 1 || !Array.isArray(value.sections)) throw new Error('Copia local incompatible.');
   return value.sections.map((section) => {
@@ -60,7 +59,7 @@ let sections: Section[];
 try {
   sections = load(localStorage.getItem(STORE_KEY));
 } catch {
-  sections = structuredClone(initialSections);
+  sections = [];
   notice.hidden = false;
 }
 
@@ -280,7 +279,7 @@ function openLink(opener: HTMLButtonElement, sectionId?: string, current?: Bookm
     title: current ? 'Editar marcador' : 'Nuevo marcador',
     submitLabel: current ? 'Guardar cambios' : 'Añadir marcador',
     children: [
-      textField('Nombre', 'name', current?.name, 'Ej. GameCartDB'),
+      textField('Nombre', 'name', current?.name, 'Ej. Wikipedia'),
       textField('Dirección web', 'url', current?.url, 'https://ejemplo.com'),
       selectField('Sección', 'section', sections.map(({ id, name }) => [id, name]), sectionId || selectedSection || sections[0].id),
       field('Nota (opcional)', notes),

@@ -16,7 +16,7 @@
 .gallery-filters button { position: relative; border: 0; padding: .75rem .08rem; min-height: 45px; background: transparent; font-size: var(--label); color: var(--muted); font-weight: 750; text-align: left; }
 .gallery-filters button:hover, .gallery-filters button[aria-pressed="true"] { color: var(--ink); }
 .gallery-filters button[aria-pressed="true"]::after { position: absolute; inset: auto 0 -1px; height: 2px; background: var(--accent); content: ""; }
-.gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.3rem 1.55rem; margin-top: 1.45rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.3rem 1.55rem; margin-top: 1.45rem; }
 .gallery-entry { min-width: 0; }
 .gallery-link { display: block; }
 .gallery-meta { display: flex; align-items: center; justify-content: space-between; gap: .45rem; margin-block: .82rem .3rem; font-size: var(--label); color: var(--muted); }

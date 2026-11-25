@@ -2,12 +2,29 @@
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
 import Thumbnail from '../components/Thumbnail.astro';
-import { initialSections } from '../lib/defaults';
 import '../styles/landing.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const manager = `${base}/marcadores/`;
-const example = initialSections[0].links[0];
+const demoSections = [
+  {
+    id: 'aprendizaje',
+    name: 'Aprendizaje',
+    links: [{ name: 'Wikipedia', url: 'https://es.wikipedia.org/', note: 'Una enciclopedia libre para consultar cualquier tema.' }],
+  },
+  {
+    id: 'mapas',
+    name: 'Mapas',
+    links: [{ name: 'OpenStreetMap', url: 'https://www.openstreetmap.org/', note: 'Un mapa abierto y colaborativo del mundo.' }],
+  },
+  {
+    id: 'desarrollo',
+    name: 'Desarrollo',
+    links: [{ name: 'MDN Web Docs', url: 'https://developer.mozilla.org/', note: 'Documentación y guías de HTML, CSS y JavaScript.' }],
+  },
+];
+const exampleSection = demoSections[0];
+const example = exampleSection.links[0];
 const steps = [
   { id: 'guardar', title: 'Guarda una web', description: 'Pega la dirección, ponle un nombre y elige una sección. Puedes añadir una nota para recordar por qué la guardaste.', icon: 'bookmark' },
   { id: 'organizar', title: 'Ordénala a tu manera', description: 'Crea y renombra las secciones que necesites. Si un enlace encaja mejor en otro sitio, cambia su sección desde el panel.', icon: 'folder' },
@@ -28,16 +45,16 @@ const steps = [
     <section class="gallery shell landing-pad" id="explorar" aria-labelledby="gallery-title">
       <div class="landing-lead">
         <h2 id="gallery-title">Reconoce tus webs de un vistazo.</h2>
-        <p>Dos ejemplos para empezar. Pulsa una miniatura para abrir la web.</p>
+        <p>Prueba con estas webs de ejemplo. Pulsa una miniatura para abrir la web.</p>
       </div>
       <div class="gallery-filters" role="group" aria-label="Filtrar ejemplos por sección" hidden>
         <button type="button" data-gallery-filter="" aria-pressed="true">Todas</button>
-        {initialSections.map((section) => (
+        {demoSections.map((section) => (
           <button type="button" data-gallery-filter={section.id} aria-pressed="false">{section.name}</button>
         ))}
       </div>
       <div class="gallery-grid">
-        {initialSections.flatMap((section) => section.links.map((link) => (
+        {demoSections.flatMap((section) => section.links.map((link) => (
           <article class="gallery-entry" data-gallery-entry={section.id}>
             <a class="gallery-link" href={link.url} target="_blank" rel="noopener noreferrer">
               <Thumbnail name={link.name} url={link.url} />
@@ -75,21 +92,21 @@ const steps = [
             <h3>Nuevo marcador</h3>
             <dl class="demo-fields">
               <div><dt>Nombre</dt><dd>{example.name}</dd></div>
-              <div><dt>Dirección web</dt><dd>{new URL(example.url).hostname}/es</dd></div>
-              <div><dt>Sección</dt><dd>Coleccionismo</dd></div>
+              <div><dt>Dirección web</dt><dd>{new URL(example.url).hostname}</dd></div>
+              <div><dt>Sección</dt><dd>{exampleSection.name}</dd></div>
             </dl>
           </div>
           <div class="demo-panel" data-guide-panel="organizar" hidden>
             <h3>Mis secciones</h3>
             <ul class="demo-sections">
-              {initialSections.map((section) => (
+              {demoSections.map((section) => (
                 <li><Icon name="folder" size={18} /> {section.name}<span>{section.links.length}</span></li>
               ))}
             </ul>
           </div>
           <div class="demo-panel" data-guide-panel="abrir" hidden>
             <h3>Buscar marcadores</h3>
-            <div class="demo-search"><Icon name="search" size={19} /> cartdb</div>
+            <div class="demo-search"><Icon name="search" size={19} /> wiki</div>
             <div class="demo-result"><Icon name="globe" size={18} /> {example.name}<Icon name="external" size={18} /></div>
           </div>
         </div>
@@ -108,7 +125,9 @@ const steps = [
         </div>
         <div class="csv-illustration" aria-hidden="true">
           <span class="csv-type">.csv</span>
-          <code>seccion, nombre, url<br />Coleccionismo, GameCartDB, gamecartdb.com/es<br />Precio videojuegos, PAL España, palespana.com</code>
+          <code>seccion,nombre,url{demoSections.flatMap((section) => section.links.map((link) => (
+            <Fragment><br />{`${section.name},${link.name},${link.url}`}</Fragment>
+          )))}</code>
         </div>
       </div>
     </section>

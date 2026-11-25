@@ -8,7 +8,6 @@ export function thumbnailsEnabled() {
   }
 }
 
-const defaultPreviewPages = new Set(['https://gamecartdb.com/es']);
 const localSuffixes = new Set(['example', 'internal', 'invalid', 'lan', 'local', 'localdomain', 'localhost', 'onion', 'test']);
 
 export function thumbnailUrl(address: string) {
@@ -21,8 +20,7 @@ export function thumbnailUrl(address: string) {
     hostname === 'home.arpa' || hostname.endsWith('.home.arpa')
   ) return undefined;
 
-  const page = defaultPreviewPages.has(url.href) ? url.href : `${url.origin}/`;
-  return `https://image.thum.io/get/width/640/crop/675/noanimate/${page}`;
+  return `https://image.thum.io/get/width/640/crop/675/noanimate/${url.origin}/`;
 }
 
 export function showThumbnail(preview: HTMLElement, address: string, enabled: boolean) {

@@ -1,10 +1,10 @@
 # Atajo
 
-Gestor personal de marcadores. La portada presenta la aplicación y **Mis marcadores** abre el panel para crear secciones y guardar enlaces. Incluye GameCartDB en Coleccionismo y PAL España en Precio videojuegos como ejemplos iniciales.
+Gestor personal de marcadores. La portada muestra ejemplos de Wikipedia, OpenStreetMap y MDN Web Docs. En **Mis marcadores**, cada persona empieza con una colección vacía y puede crear sus propias secciones o importar sus enlaces.
 
 Atajo está hecho con Astro y genera dos páginas estáticas. Los datos se guardan en el navegador. Usa el CSV para mover tu colección a otro dispositivo o navegador.
 
-Las miniaturas automáticas usan capturas de Thum.io. En general se solicita la portada del sitio, sin enviar rutas de los marcadores, parámetros ni fragmentos. Para GameCartDB se usa su portada pública en español. Los enlaces locales y los sitios sin captura muestran el nombre y el dominio. Puedes desactivar las capturas en **Mis marcadores**.
+Las miniaturas automáticas usan capturas de Thum.io. Se solicita la portada del sitio, sin enviar rutas de los marcadores, parámetros ni fragmentos. Los enlaces locales y los sitios sin captura muestran el nombre y el dominio. Puedes desactivar las capturas en **Mis marcadores**.
 
 ## Desarrollo
 
@@ -37,8 +37,9 @@ El archivo debe incluir las columnas `seccion`, `nombre` y `url`. La columna `de
 
 ```csv
 seccion,nombre,url,descripcion
-Coleccionismo,GameCartDB,https://gamecartdb.com/es,Catálogo de juegos físicos
-Precio videojuegos,PAL España,https://palespana.com/,Comparador de precios
+Aprendizaje,Wikipedia,https://es.wikipedia.org/,Enciclopedia libre
+Mapas,OpenStreetMap,https://www.openstreetmap.org/,Mapa colaborativo
+Desarrollo,MDN Web Docs,https://developer.mozilla.org/,Documentación web
 Pendientes,,,
 ```
 
